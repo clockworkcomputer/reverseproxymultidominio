@@ -1,0 +1,42 @@
+GITHUB REPOSITORY
+https://github.com/clockworkcomputer/reverseproxymultidominio.git
+
+REVERSE PROXY MULTI DOMINIO
+CREAR DIRECTORIO  DE CONTENEDORES
+mkdir contenedores
+cd contenedores
+
+DESCARGAR REPOSITORIO
+git clone https://github.com/clockworkcomputer/reverseproxymultidominio.git
+
+cd reverseproxymultidominio
+mkdir soporte test
+nano docker-compose.yml
+
+cd test
+nano Dockerfile
+cd ..
+cd soporte
+nano Dockerfile
+
+EJECUTAR CONTENEDOR REVERSEPROXY 
+cd ..
+docker-compose build
+docker-compose up
+
+
+ADMINISTRACÓN DE DOCKER
+LISTAR CONTENEDORES EN EJECUCIÓN
+sudo docker ps
+
+LISTAR CONTENEDORES ACTIVOS E INACTIVOS
+sudo docker ps -a
+
+DETENER TODOS LOS CONTENEDORES
+docker stop $(docker ps -a -q)
+
+ELIMINAR TODOS LOS CONTENEDORES
+docker rm $(docker ps -a -q)
+
+ELIMINAR TODAS LAS IMÁGENES
+docker rmi $(docker images -q)
