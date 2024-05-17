@@ -9,20 +9,50 @@ cd contenedores
 DESCARGAR REPOSITORIO
 git clone https://github.com/clockworkcomputer/reverseproxymultidominio.git
 
+mkdir reverseproxymultidominio
 cd reverseproxymultidominio
 mkdir soporte test
 nano docker-compose.yml
+***********************
 
 cd test
+nano test.docker.local.html
+***************************
 nano Dockerfile
+***************
 cd ..
 cd soporte
+nano soporte.docker.local.html
+******************************
 nano Dockerfile
+***************
 
 EJECUTAR CONTENEDOR REVERSEPROXY 
 cd ..
 docker-compose build
 docker-compose up
+docker-compose up -d
+
+RESOLUCIÓN NOMBRE DE DOMINIO
+CASO 1 SIN SERVIDOR DNS - ARCHIVO HOSTS
+sudo nano /etc/hosts 
+192.168.30.3 soporte.docker.local
+
+CASO 2. BIND9
+AÑADIR ZONA NUEVA docker.local
+AÑADIR HOST soporte.docker.local IN A 192.168.30.3 
+sudo systemctl restart bind9
+
+CASO 3. SAMBA INTERNAL DNS
+sudo samba-tool user setpassword administrator
+samba-tool dns zonecreate dc docker.local -U administrator
+samba-tool dns add dc docker.local test A 192.168.30.3 -U administrator
+
+SOLUCIÓN RESOLV.CONF > 18.04
+ls -l /etc/resolv.conf
+sudo rm -f /etc/resolv.conf
+sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+ls -l /etc/resolv.conf
 
 
 ADMINISTRACÓN DE DOCKER
